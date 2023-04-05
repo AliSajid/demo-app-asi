@@ -1,24 +1,23 @@
 [package]
-name = "demo-app"
+name = "demo-app-asi"
 version = "1.0.0-alpha.1"
 edition = "2021"
 readme = "README.md"
 description = ""
 rust-version = "1.64.0"
-repository = "https://github.com/AliSajid/demo-app"
-
+repository = "https://github.com/AliSajid/demo-app-asi"
 license = "MIT OR Apache-2.0"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 name = "demo_app_lib"
-path = "src/demo_app_lib/lib.rs"
+path = "src/demo_app_asi_lib/lib.rs"
 crate-type = ["lib"]
 
 [[bin]]
 name = "demo-app"
-path = "src/demo-app|snake_case/main.rs"
+path = "src/demo-app-asi/main.rs"
 
 [dependencies]
 
