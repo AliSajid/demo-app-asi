@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "demo-app"
+name = "demo-app-asi"
 version = "1.0.0-alpha.1"
