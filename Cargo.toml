@@ -11,12 +11,12 @@ license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
-name = "demo_app_lib"
+name = "demo_app_asi_lib"
 path = "src/demo_app_asi_lib/lib.rs"
 crate-type = ["lib"]
 
 [[bin]]
-name = "demo-app"
+name = "demo-app-asi"
 path = "src/demo-app-asi/main.rs"
 
 [dependencies]
