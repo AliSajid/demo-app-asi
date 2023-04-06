@@ -52,8 +52,7 @@ jobs:
 
           - name: Create the Version Environment Variable
             run: |
-              echo 'RELEASE_VERSION="${{inputs.new_release_version}}"' >> $GITHUB_ENV
-              echo $RELEASE_VERSION
+              echo 'RELEASE_VERSION=${{inputs.new_release_version}}' >> $GITHUB_ENV
 
           - name: Compile and release
             uses: rust-build/rust-build.action@7d5b0c135ddb825f7692d4d2d75e598184d15cec # v1.4.3
@@ -74,7 +73,7 @@ jobs:
             env:
               GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
             with:
-              name: demo-app-asi-${{ env.RELEASE_VERSION }}${{matrix.platform}}
+              name: ${{ env.RELEASE_VERSION }}${{matrix.platform}}
               tag_name: v${{ env.RELEASE_VERSION }}
               body: ${{ inputs.new_release_notes }}
               prerelease: ${{ inputs.new_release_channel == 'alpha' || inputs.new_release_channel == 'beta' }}
