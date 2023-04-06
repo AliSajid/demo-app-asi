@@ -1,4 +1,7 @@
 fn main() {
     println!("Hello, DEMO_APP!");
     println!("Hello There!");
+    println!("Hello Another!");
+    println!("Hello From This!");
+    println!("Hello From That!");
 }
