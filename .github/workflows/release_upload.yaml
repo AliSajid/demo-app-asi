@@ -65,7 +65,7 @@ jobs:
               ARCHIVE_TYPES: ${{ matrix.archive }}
               UPLOAD_MODE: "none"
               ARCHIVE_NAME: iptmnet-${{ env.RELEASE_VERSION }}${{matrix.platform}}
-              EXTRA_FILES: "README.md LICENSE"
+              EXTRA_FILES: "README.md LICENSE-MIT LICENSE-APACHE LICENSE-GPL-3.0-OR-LATER"
 
           - name: Upload Release Artifacts
             uses: softprops/action-gh-release@v1
