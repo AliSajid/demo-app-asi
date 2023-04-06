@@ -64,7 +64,7 @@ jobs:
               RUSTTARGET: ${{ matrix.target }}
               ARCHIVE_TYPES: ${{ matrix.archive }}
               UPLOAD_MODE: "none"
-              ARCHIVE_NAME: demo-app-asi-${{ env.RELEASE_VERSION }}${{matrix.platform}}
+              ARCHIVE_NAME: demo-app-asi-${{ env.RELEASE_VERSION }}-${{matrix.platform}}
               EXTRA_FILES: "README.md LICENSE-MIT LICENSE-APACHE LICENSE-GPL-3.0-OR-LATER"
 
           - name: Upload Release Artifacts
@@ -73,7 +73,7 @@ jobs:
             env:
               GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
             with:
-              name: v${{ env.RELEASE_VERSION }}${{matrix.platform}}
+              name: v${{ env.RELEASE_VERSION }}-${{matrix.platform}}
               tag_name: v${{ env.RELEASE_VERSION }}
               body: ${{ inputs.new_release_notes }}
               prerelease: ${{ inputs.new_release_channel == 'alpha' || inputs.new_release_channel == 'beta' }}
