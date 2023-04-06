@@ -3,3 +3,4 @@ pub fn lib_function() {
 }
 
 // Adding an empty commit to trigger a build
+// Adding another empty commit to trigger a build
