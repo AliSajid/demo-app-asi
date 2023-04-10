@@ -57,4 +57,5 @@ fn main() {
     println!("Hello From This!");
     println!("Hello From That!");
     println!("Hello From The Other!");
+    println!("Hello From version 1.2.0-alpha.2/1.2.0-beta.1/1.2.0!");
 }
