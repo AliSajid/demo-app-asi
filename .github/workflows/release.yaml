@@ -52,7 +52,7 @@ jobs:
             run: cargo install semantic-release-cargo --version ${{ env.SEMREL_RUST_VERSION }}
 
           - name: Install Conventional Commit preset
-            run: npm install -g conventional-changelog-conventionalcommits
+            run: npm install conventional-changelog-conventionalcommits
 
           - name: Cache dependencies
             uses: Swatinem/rust-cache@6fd3edff6979b79f87531400ad694fb7f2c84b1f # v2.2.1
