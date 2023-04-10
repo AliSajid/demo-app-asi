@@ -4,10 +4,10 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/AliSajid/demo-app-asi)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/AliSajid/demo-app-asi)
 [![Continuous integration](https://github.com/AliSajid/demo-app-asi/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/AliSajid/demo-app-asi/actions/workflows/ci.yaml)
-[![Contribute with Gitpod](https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod)](https://gitpod.io/#AliSajid/demo-app-asi)
+[![Contribute with Gitpod](https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod)](https://gitpod.io/#AliSajid/demo-app)
 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#AliSajid/demo-app-asi)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#AliSajid/demo-app)
 
 This project aims to develop a small cross-platform command line interface (CLI) for ...
 
