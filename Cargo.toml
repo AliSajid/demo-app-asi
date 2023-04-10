@@ -1,6 +1,6 @@
 [package]
 name = "demo-app-asi"
-version = "1.0.0-beta.3"
+version = "1.0.0-alpha.11"
 edition = "2021"
 readme = "README.md"
 description = "A simple demo project to test automation"
