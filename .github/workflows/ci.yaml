@@ -34,8 +34,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - windows
@@ -44,10 +42,6 @@ jobs:
             logo: windows
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
@@ -118,8 +112,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - ubuntu
@@ -128,10 +120,6 @@ jobs:
             logo: ubuntu
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
@@ -200,8 +188,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - macos
@@ -210,10 +196,6 @@ jobs:
             logo: apple
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
