@@ -37,14 +37,6 @@ jobs:
                 fetch-depth: 0
                 persist-credentials: false
 
-          - name: Install Python
-            uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # v4.5.0
-            with:
-              python-version: '3.10'
-
-          - name: install commitizen
-            run: pip install -U commitizen
-
           - name: Download semantic-release-cargo binary
             uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862 # v2.0.0
             id: download-file
