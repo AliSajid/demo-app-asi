@@ -18,7 +18,7 @@ name: Semantic Release
 
 env:
   RUST_BACKTRACE: 1
-  SEMREL_RUST_VERSION: 2.1.53
+  SEMREL_CARGO_VERSION: 2.1.64
 
 
 jobs:
@@ -48,8 +48,15 @@ jobs:
           - name: Install Rust
             uses: dtolnay/rust-toolchain@stable
 
-          - name: Install Semantic Release Rust
-            run: cargo install semantic-release-cargo --version ${{ env.SEMREL_RUST_VERSION }}
+          - name: Download a file
+            uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862 # v2.0.0
+            id: download-file
+            with:
+              file-url: https://github.com/semantic-release-cargo/semantic-release-cargo/releases/download/v${{ env.SEMREL_CARGO_VERSION }}/semantic-release-cargo-x86_64-unknown-linux-gnu
+              file-name: 'semantic-release-cargo'
+              location: '/home/runner/.cargo/bin'
+              md5: '72f22e252948eed1548c0e0eeb1c5656' # pragma: allowlist secret
+              sha256: '32b4ace302b29423a810f3f2ef989e746703cbbec67c2403adfa0c20a1047d88' # pragma: allowlist secret
 
           - name: Install Conventional Commit preset
             run: npm install conventional-changelog-conventionalcommits
