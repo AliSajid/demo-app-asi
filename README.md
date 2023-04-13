@@ -19,6 +19,8 @@ This project aims to develop a small cross-platform command line interface (CLI)
 | Windows  | stable <br/> beta <br/> nightly <br/> MSRV (1.64.0) | ![macos x Stable Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/windows-stable.json) <br/> ![macos x Beta Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/windows-beta.json) <br/> ![macos x Nightly Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/windows-nightly.json) <br/> ![macos x MSRV Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/windows-msrv.json) |
 | macOS    | stable <br/> beta <br/> nightly <br/> MSRV (1.64.0) | ![Windows x Stable Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/macos-stable.json) <br/> ![Windows x Beta Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/macos-beta.json) <br/> ![Windows x Nightly Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/macos-nightly.json) <br/> ![Windows x MSRV Rust](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/AliSajid/7ebf966d672758876a67adc60aab3997/raw/macos-msrv.json) |
 
-## Current Status
+## To Do List
 
-The current status of the project is ...
+- [] Change the Audit workflow to not rely on actions-rs
+- [] Do a direct binary download of semantic-release-cargo
+- [] Identify how to run the release workflow on main branch
