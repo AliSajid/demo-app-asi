@@ -16,7 +16,8 @@ on:
 
 
 concurrency:
-  group: CI
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   GIST_KEY: 7ebf966d672758876a67adc60aab3997 # pragma: allowlist secret
