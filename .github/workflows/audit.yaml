@@ -8,6 +8,8 @@ on:
             - '**/Cargo.lock'
     workflow_dispatch:
 
+env:
+    CARGO_AUDIT_VERSION: 0.17.5
 
 jobs:
     security_audit:
@@ -16,7 +18,20 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
-            - name: Audit
-              uses: actions-rs/audit-check@35b7b53b1e25b55642157ac01b4adceb5b9ebef3 # v1.2.0
+            - name: Install Rust
+              uses: dtolnay/rust-toolchain@stable
+            - name: Cache dependencies
+              uses: Swatinem/rust-cache@6fd3edff6979b79f87531400ad694fb7f2c84b1f # v2.2.1
+            - name: Download a file
+              uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862 # v2.0.0
+              id: download-file
               with:
-                  token: ${{ secrets.ACTIONS_PAT_GITHUB }}
+                file-url: https://github.com/rustsec/rustsec/releases/download/cargo-audit/v${{env.CARGO_AUDIT_VERSION}}/cargo-audit-x86_64-unknown-linux-gnu-v${{env.CARGO_AUDIT_VERSION}}.tgz
+                file-name: 'cargo-audit.tgz'
+                location: '/home/runner'
+                md5: 'c85809dd6d9907cecc0bd5e202b11da2' # pragma: allowlist secret
+                sha256: '40620dfb7f05a58c338f86ab68669e454763035f08e4199a0c4fbb373248830a' # pragma: allowlist secret
+            - name: Extract a file
+              run: tar -xzf /home/runner/cargo-audit.tgz -C /home/runner/.cargo/bin
+            - name: Audit
+              run: cargo audit
