@@ -16,7 +16,8 @@ on:
 
 
 concurrency:
-  group: CI
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   GIST_KEY: 7ebf966d672758876a67adc60aab3997 # pragma: allowlist secret
@@ -34,8 +35,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - windows
@@ -44,10 +43,6 @@ jobs:
             logo: windows
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
@@ -118,8 +113,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - ubuntu
@@ -128,10 +121,6 @@ jobs:
             logo: ubuntu
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
@@ -200,8 +189,6 @@ jobs:
       matrix:
         rust:
           - stable
-          - beta
-          - nightly
           - 1.64.0  # MSRV
         os:
           - macos
@@ -210,10 +197,6 @@ jobs:
             logo: apple
           - rust: 1.64.0
             label: msrv
-          - rust: nightly
-            label: nightly
-          - rust: beta
-            label: beta
           - rust: stable
             label: stable
 
