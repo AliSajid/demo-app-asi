@@ -18,7 +18,7 @@ name: Semantic Release
 
 env:
   RUST_BACKTRACE: 1
-  SEMREL_RUST_VERSION: 2.1.53
+  SEMREL_CARGO_VERSION: 2.1.71
 
 
 jobs:
