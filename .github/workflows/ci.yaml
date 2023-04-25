@@ -8,16 +8,11 @@ on:
   pull_request:
     branches:
       - 'main'
-      - 'beta'
-      - 'alpha'
-    types:
-      - 'closed'
   workflow_dispatch:
 
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: CI
 
 env:
   GIST_KEY: 7ebf966d672758876a67adc60aab3997 # pragma: allowlist secret
@@ -27,14 +22,15 @@ env:
 
 jobs:
   windows-ci:
-    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{matrix.os}}-latest
     outputs:
       result: ${{steps.result.outputs.result}}
     strategy:
       matrix:
         rust:
           - stable
+          - beta
+          - nightly
           - 1.64.0  # MSRV
         os:
           - windows
@@ -43,6 +39,10 @@ jobs:
             logo: windows
           - rust: 1.64.0
             label: msrv
+          - rust: nightly
+            label: nightly
+          - rust: beta
+            label: beta
           - rust: stable
             label: stable
 
@@ -52,7 +52,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ${{ matrix.rust }}
+          toolchain: ${{matrix.rust}}
           components: rustfmt, clippy
 
       - name: Cache dependencies
@@ -74,15 +74,15 @@ jobs:
       - name: Wait before badge creation
         uses: AliSajid/random-wait-action@v1.1.0
         with:
-          minimum: ${{ env.MINIMUM_WAIT }}
-          maximum: ${{ env.MAXIMUM_WAIT }}
+          minimum: ${{env.MINIMUM_WAIT}}
+          maximum: ${{env.MAXIMUM_WAIT}}
 
       - name: Create Awesome Badge - Success
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: success()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           label: Build
           namedLogo: ${{matrix.logo}}
@@ -93,8 +93,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: failure()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           namedLogo: ${{matrix.logo}}
           label: Build
@@ -103,16 +103,18 @@ jobs:
 
       - name: Set Result
         if: always()
-        run: echo "result=${{ job.status }}" >> $GITHUB_OUTPUT
+        run: echo "result=${{job.status}}" >> $GITHUB_OUTPUT
 
   ubuntu-ci:
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{matrix.os}}-latest
     outputs:
       result: ${{steps.result.outputs.result}}
     strategy:
       matrix:
         rust:
           - stable
+          - beta
+          - nightly
           - 1.64.0  # MSRV
         os:
           - ubuntu
@@ -121,6 +123,10 @@ jobs:
             logo: ubuntu
           - rust: 1.64.0
             label: msrv
+          - rust: nightly
+            label: nightly
+          - rust: beta
+            label: beta
           - rust: stable
             label: stable
 
@@ -130,7 +136,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ${{ matrix.rust }}
+          toolchain: ${{matrix.rust}}
           components: rustfmt, clippy
 
       - name: Cache dependencies
@@ -152,15 +158,15 @@ jobs:
       - name: Wait before badge creation
         uses: AliSajid/random-wait-action@v1.1.0
         with:
-          minimum: ${{ env.MINIMUM_WAIT }}
-          maximum: ${{ env.MAXIMUM_WAIT }}
+          minimum: ${{env.MINIMUM_WAIT}}
+          maximum: ${{env.MAXIMUM_WAIT}}
 
       - name: Create Awesome Badge - Success
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: success()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           label: Build
           namedLogo: ${{matrix.logo}}
@@ -171,8 +177,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: failure()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           namedLogo: ${{matrix.logo}}
           label: Build
@@ -181,14 +187,16 @@ jobs:
 
       - name: Set Result
         if: always()
-        run: echo "result=${{ job.status }}" >> $GITHUB_OUTPUT
+        run: echo "result=${{job.status}}" >> $GITHUB_OUTPUT
 
   macos-ci:
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{matrix.os}}-latest
     strategy:
       matrix:
         rust:
           - stable
+          - beta
+          - nightly
           - 1.64.0  # MSRV
         os:
           - macos
@@ -197,6 +205,10 @@ jobs:
             logo: apple
           - rust: 1.64.0
             label: msrv
+          - rust: nightly
+            label: nightly
+          - rust: beta
+            label: beta
           - rust: stable
             label: stable
 
@@ -206,7 +218,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ${{ matrix.rust }}
+          toolchain: ${{matrix.rust}}
           components: rustfmt, clippy
 
       - name: Cache dependencies
@@ -228,15 +240,15 @@ jobs:
       - name: Wait before badge creation
         uses: AliSajid/random-wait-action@v1.1.0
         with:
-          minimum: ${{ env.MINIMUM_WAIT }}
-          maximum: ${{ env.MAXIMUM_WAIT }}
+          minimum: ${{env.MINIMUM_WAIT}}
+          maximum: ${{env.MAXIMUM_WAIT}}
 
       - name: Create Awesome Badge - Success
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: success()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           label: Build
           namedLogo: ${{matrix.logo}}
@@ -247,8 +259,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@5d424ad4060f866e4d1dab8f8da0456e6b1c4f56 # v1.6.0
         if: failure()
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ env.GIST_KEY }}
+          auth: ${{secrets.GIST_SECRET}}
+          gistID: ${{env.GIST_KEY}}
           filename: ${{matrix.os}}-${{matrix.label}}.json
           namedLogo: ${{matrix.logo}}
           label: Build
@@ -257,7 +269,7 @@ jobs:
 
       - name: Set Result
         if: always()
-        run: echo "result=${{ job.status }}" >> $GITHUB_OUTPUT
+        run: echo "result=${{job.status}}" >> $GITHUB_OUTPUT
 
   semantic-release:
     needs: [macos-ci, windows-ci, ubuntu-ci]
@@ -266,11 +278,11 @@ jobs:
 
   upload-release-artifacts:
     needs: [semantic-release]
-    if: ${{ needs.semantic-release.outputs.new_release_published == 'true' }}
+    if: ${{needs.semantic-release.outputs.new_release_published == 'true'}}
     uses: ./.github/workflows/release_upload.yaml
     secrets: inherit # pragma: allowlist secret
     with:
-      new_release_version: ${{ needs.semantic-release.outputs.new_release_version }}
-      new_release_published: ${{ needs.semantic-release.outputs.new_release_published }}
-      new_release_notes: ${{ needs.semantic-release.outputs.new_release_notes }}
-      new_release_channel: ${{ needs.semantic-release.outputs.new_release_channel }}
+      new_version: ${{needs.semantic-release.outputs.new_version}}
+      new_release_published: ${{needs.semantic-release.outputs.new_release_published}}
+      new_release_notes: ${{needs.semantic-release.outputs.new_release_notes}}
+      new_release_channel: ${{needs.semantic-release.outputs.new_release_channel}}

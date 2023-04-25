@@ -3,22 +3,22 @@ on:
     outputs:
       new_release_version:
         description: 'The new version to release'
-        value: ${{ jobs.release.outputs.new_release_version }}
+        value: ${{jobs.release.outputs.new_release_version}}
       new_release_published:
         description: 'Whether a new release was published'
-        value: ${{ jobs.release.outputs.new_release_published }}
+        value: ${{jobs.release.outputs.new_release_published}}
       new_release_notes:
         description: 'The release notes'
-        value: ${{ jobs.release.outputs.new_release_notes }}
+        value: ${{jobs.release.outputs.new_release_notes}}
       new_release_channel:
         description: 'The release channel'
-        value: ${{ jobs.release.outputs.new_release_channel }}
+        value: ${{jobs.release.outputs.new_release_channel}}
 
 name: Semantic Release
 
 env:
   RUST_BACKTRACE: 1
-  SEMREL_CARGO_VERSION: 2.1.64
+  SEMREL_RUST_VERSION: 2.1.53
 
 
 jobs:
@@ -26,10 +26,10 @@ jobs:
         name: Semantic Release
         runs-on: ubuntu-latest
         outputs:
-          new_release_version: ${{ steps.semantic.outputs.new_release_version }}
-          new_release_published: ${{ steps.semantic.outputs.new_release_published }}
-          new_release_notes: ${{ steps.semantic.outputs.new_release_notes }}
-          new_release_channel: ${{ steps.semantic.outputs.new_release_channel }}
+          new_release_version: ${{steps.semantic.outputs.new_release_version}}
+          new_release_published: ${{steps.semantic.outputs.new_release_published}}
+          new_release_notes: ${{steps.semantic.outputs.new_release_notes}}
+          new_release_channel: ${{steps.semantic.outputs.new_release_channel}}
         steps:
           - name: Checkout
             uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -37,21 +37,29 @@ jobs:
                 fetch-depth: 0
                 persist-credentials: false
 
-          - name: Download semantic-release-cargo binary
-            uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862 # v2.0.0
-            id: download-file
+          - name: Install Python
+            uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # v4.5.0
             with:
-              file-url: https://github.com/semantic-release-cargo/semantic-release-cargo/releases/download/v${{ env.SEMREL_CARGO_VERSION }}/semantic-release-cargo-x86_64-unknown-linux-gnu
-              file-name: 'semantic-release-cargo'
-              location: '/home/runner/.cargo/bin'
-              md5: '72f22e252948eed1548c0e0eeb1c5656' # pragma: allowlist secret
-              sha256: '32b4ace302b29423a810f3f2ef989e746703cbbec67c2403adfa0c20a1047d88' # pragma: allowlist secret
+              python-version: '3.10'
 
-          - name: Mark semantic-release-cargo as executable
-            run: chmod +x /home/runner/.cargo/bin/semantic-release-cargo
+          - name: install commitizen
+            run: pip install -U commitizen
+
+          - name: Install Rust
+            uses: dtolnay/rust-toolchain@stable
+
+          - name: Install Semantic Release Rust
+            run: cargo install semantic-release-cargo --version ${{env.SEMREL_RUST_VERSION}}
 
           - name: Install Conventional Commit preset
             run: npm install conventional-changelog-conventionalcommits
+
+          - name: Cache dependencies
+            uses: Swatinem/rust-cache@6fd3edff6979b79f87531400ad694fb7f2c84b1f # v2.2.1
+
+          # The release build is used in the Semantic Release step
+          - name: Cargo Build Release
+            run: cargo build --verbose --release
 
           - name: Semantic Release
             uses: cycjimmy/semantic-release-action@91ab76a4a393a8d0c4739e9aea1818b56bc953ea # v3.4.0
@@ -62,5 +70,5 @@ jobs:
                     @semantic-release/exec@6
                     @semantic-release/git@10
             env:
-                GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
-                CARGO_REGISTRY_TOKEN: ${{ secrets.SEMREL_CRATES_IO }}
+                GITHUB_TOKEN: ${{secrets.ACTIONS_PAT_GITHUB}}
+                CARGO_REGISTRY_TOKEN: ${{secrets.SEMREL_CRATES_IO}}
